@@ -1,0 +1,23 @@
+services:
+  backend-api:
+    build:
+      context: .
+      dockerfile: backend-api/Dockerfile
+    environment:
+      DATABASE_URL: sqlite:///app/data/alerts.db?mode=rwc
+      MODEL_PATH: /app/model.onnx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend-api/data:/app/data
+
+  frontend-panel:
+    build:
+      context: .
+      dockerfile: frontend-panel/Dockerfile
+    environment:
+      VITE_API_URL: http://backend-api:8080
+    depends_on:
+      - backend-api
+    ports:
+      - "5173:5173"

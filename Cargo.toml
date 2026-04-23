@@ -1,0 +1,4 @@
+[workspace]
+members = ["edge-sentinel", "backend-api"]
+resolver = "2"
+
